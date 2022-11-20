@@ -6,10 +6,11 @@ public class Playercontrol : MonoBehaviour
 {
    
     private  Rigidbody2D saro_rigidbody;
+    public Animator animator; 
 
     public float facedirection;
     public float movedirectionx;
-    private float speed = 5.0f;
+    private float speed = 10.0f;
 
 
     private float minimalWalkspeedx = .25f;
@@ -59,6 +60,7 @@ public class Playercontrol : MonoBehaviour
             if (moveRight)
             {
                 moveright();
+                
             }
             else if (!moveRight)
             {
@@ -71,6 +73,7 @@ public class Playercontrol : MonoBehaviour
     public void DontAllowMovement()
     {
         dontMove = true;
+        animator.SetFloat("Speed", 0);
     }
     
 
@@ -80,6 +83,7 @@ public class Playercontrol : MonoBehaviour
     {
         dontMove = false;
         moveRight = movement;
+
     }
 
 
@@ -106,7 +110,9 @@ public class Playercontrol : MonoBehaviour
     public void moveright()
     {
         facedirection = 1;
-        
+
+        animator.SetFloat("Speed", Mathf.Abs(facedirection));
+
         if (facedirection != 0)
         {
             if (currentspeedx == 0)
@@ -158,6 +164,8 @@ public class Playercontrol : MonoBehaviour
             transform.localScale = new Vector2(-1, 1);
             // saro_rigidbody.velocity = new Vector2(-speed, saro_rigidbody.velocity.y);
         }
+
+        
     }
 
 
@@ -166,6 +174,8 @@ public class Playercontrol : MonoBehaviour
     public void MoveLeft()
     {
         facedirection = 1;
+
+        animator.SetFloat("Speed", Mathf.Abs(facedirection));
 
         if (facedirection != 0)
         {
@@ -224,8 +234,19 @@ public class Playercontrol : MonoBehaviour
     public void Jump()
     {
         saro_rigidbody.velocity = new Vector2(saro_rigidbody.velocity.x, force);
+        //animator.SetBool("isJumping", true);
     }
 
+
+    public void OnLanding()
+    {
+        animator.SetBool("isJumping", false);
+    }
+
+    public void attack()
+    {
+
+    }
 
 
 
